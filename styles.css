@@ -2,6 +2,7 @@
     --gap: 10px;
     --border-radius: 8.5px;
     --background-color: #273a13;
+    --accent-text-color: #ffffff;
 }
 
 body {
@@ -36,7 +37,7 @@ input[type="color"] {
     color: #fff;
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 20px;
     margin: 10px;
     cursor: pointer;
     background-color: #242424;
@@ -114,7 +115,7 @@ input[type="color"] {
     position: absolute;
     width: 40px;
     height: 1px;
-    background-color: #ffffff;
+    background-color: var(--accent-text-color);
     border-radius: 100vw;
 }
 .box[two-subjects="false"] > div:nth-child(2) {
@@ -132,4 +133,69 @@ input[type="color"] {
 }
 .box[column="2"][row="2"] {
     font-size: 11px;
+}
+
+
+
+@media print {
+    .settings {
+        display: none;
+    }
+    .typeLabel {
+        display: none;
+    }
+    .settingsAndTimetable {
+        display: initial;
+        width: 100vw;
+        height: 100vh;
+    }
+    .background {
+        width: 100vw;
+        height: 100vh;
+        aspect-ratio: unset;
+    }
+    .wrapper {
+        width: 100vw;
+        height: 100vh;
+        aspect-ratio: unset;
+    }
+    .box[background-white="true"] {
+        outline: 0.1vw solid black;
+    }
+    .box[column="1"] {
+        width: 8vw;
+    }
+    .box[column="2"] {
+        width: 15vw;
+    }
+    .box[row="1"] {
+        height: 3.5vw;
+    }
+    .box[row="2"] {
+        height: 6.5vw;
+    }
+    .box[row="2"][column="1"]::after {
+        content: "";
+        position: absolute;
+        width: 4vw;
+        height: 0.1vw;
+        background-color: var(--accent-text-color);
+        border-radius: 100vw;
+    }
+    .box[two-subjects="false"] > div:nth-child(2) {
+        display: none;
+    }
+    .box[two-subjects="true"]::before {
+        content: "";
+        position: absolute;
+        height: 6.5vw;
+        width: 0.05vw;
+        background-color: #000000;
+    }
+    .box[two-subjects="true"] > div {
+        flex: 1 1 0px;
+    }
+    .box[column="2"][row="2"] {
+        font-size: 1.1vw;
+    }
 }
