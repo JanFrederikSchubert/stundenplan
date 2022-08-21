@@ -1,0 +1,135 @@
+:root {
+    --gap: 10px;
+    --border-radius: 8.5px;
+    --background-color: #273a13;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    overflow: auto;
+    background-color: #121212;
+}
+input[type="file"] {
+    display: none;
+}
+input[type="color"] {
+	opacity: 0;
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+#colorDisplay {
+    width: 30px;
+    height: 20px;
+    border-radius: 5px;
+    margin-left: auto;
+    background-color: #e5e5e5;
+}
+.typeLabel {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    background-color: #242424;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+.typeLabel:hover {
+    background-color: #303030;
+}
+.typeLabel:active {
+    background-color: #363636;
+}
+.settingsAndTimetable {
+    display: flex;
+}
+.settings {
+    flex-grow: 1;
+    min-width: 400px;
+}
+.background {
+    position: absolute;
+    z-index: -1;
+    width: 1000px;
+    aspect-ratio: 297 / 210;
+    object-fit: cover;
+}
+.wrapper {
+    width: 1000px;
+    aspect-ratio: 297 / 210;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.row {
+    display: flex;
+    gap: var(--gap);
+    margin-bottom: var(--gap);
+}
+.row:last-child {
+    margin-bottom: 0;
+}
+.box {
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+}
+.box[background-white="false"] {
+    background-color: var(--background-color);
+    color: white;
+}
+.box[background-white="true"] {
+    background-color: #ffffffe3;
+    outline: 1px solid black;
+}
+.box[column="1"] {
+    width: 80px;
+}
+.box[column="2"] {
+    width: 150px;
+}
+.box[row="1"] {
+    height: 35px;
+}
+.box[row="2"] {
+    height: 65px;
+}
+.box[row="2"][column="1"] {
+    line-height: 140%;
+}
+.box[row="2"][column="1"]::after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 1px;
+    background-color: #ffffff;
+    border-radius: 100vw;
+}
+.box[two-subjects="false"] > div:nth-child(2) {
+    display: none;
+}
+.box[two-subjects="true"]::before {
+    content: "";
+    position: absolute;
+    height: 65px;
+    width: 0.5px;
+    background-color: #000000;
+}
+.box[two-subjects="true"] > div {
+    flex: 1 1 0px;
+}
+.box[column="2"][row="2"] {
+    font-size: 11px;
+}
