@@ -19,15 +19,27 @@
 <body>
     <div class="settingsAndTimetable">
         <div class="settings">
-            <label class="typeLabel">
+            <label class="typeLabel" hoverEffects="true">
                 <input type="file" id="background" name="background" accept="image/png, image/jpeg">
                 Hintergrundbild wählen
             </label>
-            <label class="typeLabel">
+            <label class="typeLabel" hoverEffects="true">
                 Akzentfarbe
-                <input type="color" id="colorPicker" name="colorPicker" accept="image/png, image/jpeg">
+                <input type="color" id="colorPicker" name="colorPicker">
                 <div id="colorDisplay"></div>
             </label>
+            <label class="typeLabel">
+                Eckenradius
+                <input type="range" id="borderRadiusPicker" name="borderRadiusPicker" min="0" max="33">
+            </label>
+            <select class="typeLabel customSelect" hoverEffects="true" id="amountOfRows">
+                <option value="">Maximale Stundenzahl</option>
+                <option value="3">6 Stunden</option>
+                <option value="4">8 Stunden</option>
+                <option value="5">10 Stunden</option>
+            </select>
+            <button class="typeLabel customSelect clear" id="clear" hoverEffects="true">Zurücksetzen</button>
+            <button class="printButton" id="print">Drucken</button>
         </div>
         <div class="timetable">
             <img class="background" id="backgroundImage" src="images/background.png" />
@@ -43,117 +55,142 @@
                     </div>
                     <div class="row">
                         <div class="box" accent="true" background-white="false" column="1" row="2">1<br>2</div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="true">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="mo1" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mo1')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="di1" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'di1')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="mi1" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mi1')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="true">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="do1" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'do1')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="fr1" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'fr1')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="box" accent="true" background-white="false" column="1" row="2">3<br>4</div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="true">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="mo2" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mo2')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="di2" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'di2')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="mi2" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mi2')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="true">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="do2" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'do2')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="fr2" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'fr2')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="box" accent="true" background-white="false" column="1" row="2">5<br>6</div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="true">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="mo3" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mo3')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="di3" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'di3')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="mi3" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mi3')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="true">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="do3" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'do3')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="fr3" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'fr3')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="row4">
                         <div class="box" accent="true" background-white="false" column="1" row="2">7<br>8</div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="true">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="mo4" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mo4')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="di4" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'di4')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="mi4" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mi4')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="true">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="do4" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'do4')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="fr4" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'fr4')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="row5">
                         <div class="box" accent="true" background-white="false" column="1" row="2">9<br>10</div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="true">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="mo5" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mo5')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="di5" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'di5')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="mi5" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mi5')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="true">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="do5" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'do5')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
-                        <div class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <div>Fach<br>Raum</div>
-                            <div>Fach<br>Raum</div>
+                        <div id="fr5" class="box" background-white="true" column="2" row="2" two-subjects="false">
+                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'fr5')">
+                            <div contenteditable="true">Fach<br>Raum</div>
+                            <div contenteditable="true">Fach<br>Raum</div>
                         </div>
                     </div>
                 </div>

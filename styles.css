@@ -1,7 +1,8 @@
 :root {
     --gap: 10px;
-    --border-radius: 8.5px;
-    --background-color: #273a13;
+    --border-radius: 10px;
+    --border-radius-print: 1vw;
+    --background-color: #000000;
     --accent-text-color: #ffffff;
 }
 
@@ -31,7 +32,7 @@ input[type="color"] {
     height: 20px;
     border-radius: 5px;
     margin-left: auto;
-    background-color: #e5e5e5;
+    background-color: var(--background-color);
 }
 .typeLabel {
     color: #fff;
@@ -42,20 +43,94 @@ input[type="color"] {
     cursor: pointer;
     background-color: #242424;
     border-radius: 10px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.typeLabel[hoverEffects="true"]:hover {
+    background-color: #303030;
+    border-color: #303030;
+}
+.typeLabel[hoverEffects="true"]:active {
+    background-color: #363636;
+    border-color: #363636;
+}
+.customSelect {
+    outline: none;
+    border-width: 0;
+    border-right-width: 20px;
+    border-color: #242424;
+    width: calc(100% - 20px);
+    font-size: 18px;
+}
+.clear {
+    border-width: 0 !important;
+    position: absolute;
+    bottom: 70.8px;
+}
+.printButton {
+    position: absolute;
+    bottom: 0;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin: 10px;
+    cursor: pointer;
+    background-color: #0049b0;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+    outline: none;
+    border-width: 0;
+    width: calc(100% - 20px);
+    font-size: 18px;
+}
+.printButton:hover {
+    background-color: #003c91;
+}
+.printButton:active {
+    background-color: #00347d;
+}
+#borderRadiusPicker {
+    margin-left: 20px;
+}
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    background-color: #303030;
+    border-radius: 100vw;
+    outline: none;
     transition: background-color 0.2s ease;
 }
-.typeLabel:hover {
-    background-color: #303030;
+input[type="range"]:hover {
+    background-color: #363636
 }
-.typeLabel:active {
-    background-color: #363636;
+  
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px; 
+    border-radius: 50%;
+    background-color: #999999;
+    cursor: pointer;
 }
+  
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #999999;
+    cursor: pointer;
+}
+
 .settingsAndTimetable {
     display: flex;
 }
 .settings {
     flex-grow: 1;
     min-width: 400px;
+    position: relative;
 }
 .background {
     position: absolute;
@@ -76,6 +151,9 @@ input[type="color"] {
     gap: var(--gap);
     margin-bottom: var(--gap);
 }
+.row[show="false"] {
+    display: none;
+}
 .row:last-child {
     margin-bottom: 0;
 }
@@ -89,7 +167,7 @@ input[type="color"] {
 }
 .box[background-white="false"] {
     background-color: var(--background-color);
-    color: white;
+    color: var(--accent-text-color);
 }
 .box[background-white="true"] {
     background-color: #ffffffe3;
@@ -106,6 +184,32 @@ input[type="color"] {
 }
 .box[row="2"] {
     height: 65px;
+}
+.box[background-white="true"] > div {
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+.box[background-white="true"] > input {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    text-align: left;
+}
+.box[two-subjects="true"] > div:nth-child(2) {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+.box[two-subjects="true"] > div:nth-child(3) {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+.box[two-subjects="false"] > div {
+    border-radius: var(--border-radius);
 }
 .box[row="2"][column="1"] {
     line-height: 140%;
@@ -138,6 +242,9 @@ input[type="color"] {
 
 
 @media print {
+    input {
+        display: none;
+    }
     .settings {
         display: none;
     }
@@ -158,6 +265,9 @@ input[type="color"] {
         width: 100vw;
         height: 100vh;
         aspect-ratio: unset;
+    }
+    .box {
+        border-radius: var(--border-radius-print);
     }
     .box[background-white="true"] {
         outline: 0.1vw solid black;
