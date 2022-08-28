@@ -11,6 +11,13 @@ var backgroundImage = document.getElementById("backgroundImage");
 
 var editableBoxes = document.querySelectorAll("[contenteditable='true']");
 
+root.style.setProperty("--height", window.innerHeight);
+
+window.onresize = function () {
+  root.style.setProperty("--height", window.innerHeight + "px");
+  console.log("Change");
+};
+
 var color = DOMPurify.isSupported
   ? DOMPurify.sanitize(localStorage.getItem("color")) !== null &&
     DOMPurify.sanitize(localStorage.getItem("color")) !== "" &&
@@ -88,14 +95,19 @@ borderRadiusPicker.oninput = function () {
 amountOfRows.onchange = function () {
   if (DOMPurify.isSupported) {
     rows = Number(DOMPurify.sanitize(amountOfRows.value));
-    localStorage.setItem("rows", Number(DOMPurify.sanitize(rows)));
+    if (
+      Number(DOMPurify.sanitize(rows)) >= 3 &&
+      Number(DOMPurify.sanitize(rows)) <= 5
+    ) {
+      localStorage.setItem("rows", Number(DOMPurify.sanitize(rows)));
+    }
     if (Number(DOMPurify.sanitize(rows)) === 3) {
       document.getElementById("row4").setAttribute("show", false);
       document.getElementById("row5").setAttribute("show", false);
     } else if (Number(DOMPurify.sanitize(rows)) === 4) {
       document.getElementById("row4").setAttribute("show", true);
       document.getElementById("row5").setAttribute("show", false);
-    } else {
+    } else if (Number(DOMPurify.sanitize(rows)) === 5) {
       document.getElementById("row4").setAttribute("show", true);
       document.getElementById("row5").setAttribute("show", true);
     }
@@ -137,6 +149,20 @@ if (DOMPurify.isSupported) {
 
 function setTwoSubjects(value, id) {
   document.getElementById(id).setAttribute("two-subjects", value);
+}
+
+function resetBorderRadius() {
+  borderRadius = 10;
+  localStorage.removeItem("border-radius");
+  borderRadiusPicker.value = Number(DOMPurify.sanitize(borderRadius));
+  root.style.setProperty(
+    "--border-radius",
+    DOMPurify.sanitize(borderRadius + "px")
+  );
+  root.style.setProperty(
+    "--border-radius-print",
+    DOMPurify.sanitize(borderRadius / 10 + "vw")
+  );
 }
 
 clear.onclick = function () {

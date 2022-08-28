@@ -4,6 +4,7 @@
     --border-radius-print: 1vw;
     --background-color: #000000;
     --accent-text-color: #ffffff;
+    --height: 100vw;
 }
 
 body {
@@ -12,11 +13,24 @@ body {
     font-size: 18px;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    overflow: auto;
+    overflow: hidden;
     background-color: #121212;
 }
+.material-symbols-rounded {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
 input[type="file"] {
-    display: none;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
 }
 input[type="color"] {
 	opacity: 0;
@@ -46,6 +60,10 @@ input[type="color"] {
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 .typeLabel[hoverEffects="true"]:hover {
+    background-color: #303030;
+    border-color: #303030;
+}
+.typeLabel[hoverEffects="true"]:focus-within {
     background-color: #303030;
     border-color: #303030;
 }
@@ -86,11 +104,26 @@ input[type="color"] {
 .printButton:hover {
     background-color: #003c91;
 }
+.printButton:focus {
+    background-color: #003c91;
+}
 .printButton:active {
     background-color: #00347d;
 }
+
+@media screen and (max-height: 440px) {
+    .printButton {
+        position: initial;
+        bottom: initial;
+    }
+    .clear {
+        position: initial;
+        bottom: initial;
+    }
+}
 #borderRadiusPicker {
     margin-left: 20px;
+    margin-right: 20px;
 }
 input[type="range"] {
     -webkit-appearance: none;
@@ -105,7 +138,9 @@ input[type="range"] {
 input[type="range"]:hover {
     background-color: #363636
 }
-  
+input[type="range"]:focus {
+    background-color: #363636
+}
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -114,8 +149,7 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 50%;
     background-color: #999999;
     cursor: pointer;
-}
-  
+}  
 input[type="range"]::-moz-range-thumb {
     width: 20px;
     height: 20px;
@@ -124,6 +158,25 @@ input[type="range"]::-moz-range-thumb {
     cursor: pointer;
 }
 
+.resetBorderButton {
+   outline: none;
+   border: none;
+   background: none;
+   color: white;
+   padding: 0;
+   cursor: pointer;
+   transition: color 0.2s ease;
+}
+.resetBorderButton:hover {
+    color: #c2c2c2;
+ }
+ .resetBorderButton:focus {
+    color: #c2c2c2;
+ }
+ .resetBorderButton:active {
+    color: #9f9f9f;
+ }
+
 .settingsAndTimetable {
     display: flex;
 }
@@ -131,6 +184,8 @@ input[type="range"]::-moz-range-thumb {
     flex-grow: 1;
     min-width: 400px;
     position: relative;
+    height: var(--height);
+    overflow: auto;
 }
 .background {
     position: absolute;
@@ -145,6 +200,10 @@ input[type="range"]::-moz-range-thumb {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.timetable {
+    max-height: var(--height);
+    overflow: auto;
 }
 .row {
     display: flex;
@@ -164,13 +223,15 @@ input[type="range"]::-moz-range-thumb {
     align-items: center;
     position: relative;
     text-align: center;
+    transition: border-radius 0.2s ease, background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
 }
 .box[background-white="false"] {
     background-color: var(--background-color);
     color: var(--accent-text-color);
 }
 .box[background-white="true"] {
-    background-color: #ffffffe3;
+    background-color: #ffffff;
+    opacity: 0.9;
     outline: 1px solid black;
 }
 .box[column="1"] {
@@ -220,9 +281,10 @@ input[type="range"]::-moz-range-thumb {
     width: 40px;
     height: 1px;
     background-color: var(--accent-text-color);
+    transition: background-color 0.2s ease;
     border-radius: 100vw;
 }
-.box[two-subjects="false"] > div:nth-child(2) {
+.box[two-subjects="false"] > div:nth-child(3) {
     display: none;
 }
 .box[two-subjects="true"]::before {
@@ -242,6 +304,9 @@ input[type="range"]::-moz-range-thumb {
 
 
 @media print {
+    .timetable {
+        max-height: initial;
+    }
     input {
         display: none;
     }
@@ -292,7 +357,7 @@ input[type="range"]::-moz-range-thumb {
         background-color: var(--accent-text-color);
         border-radius: 100vw;
     }
-    .box[two-subjects="false"] > div:nth-child(2) {
+    .box[two-subjects="false"] > div:nth-child(3) {
         display: none;
     }
     .box[two-subjects="true"]::before {
