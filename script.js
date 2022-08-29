@@ -2,6 +2,7 @@ var root = document.documentElement;
 
 var colorPicker = document.getElementById("colorPicker");
 var borderRadiusPicker = document.getElementById("borderRadiusPicker");
+var opacityPicker = document.getElementById("opacityPicker");
 var amountOfRows = document.getElementById("amountOfRows");
 var clear = document.getElementById("clear");
 var printButton = document.getElementById("print");
@@ -15,7 +16,6 @@ root.style.setProperty("--height", window.innerHeight);
 
 window.onresize = function () {
   root.style.setProperty("--height", window.innerHeight + "px");
-  console.log("Change");
 };
 
 var color = DOMPurify.isSupported
@@ -33,6 +33,14 @@ var borderRadius = DOMPurify.isSupported
     ? Number(DOMPurify.sanitize(localStorage.getItem("border-radius")))
     : 10
   : 10;
+var opacity = DOMPurify.isSupported
+  ? DOMPurify.sanitize(localStorage.getItem("opacity")) !== null &&
+    DOMPurify.sanitize(localStorage.getItem("opacity")) !== "" &&
+    DOMPurify.sanitize(localStorage.getItem("opacity")) >= 0 &&
+    DOMPurify.sanitize(localStorage.getItem("opacity")) <= 100
+    ? Number(DOMPurify.sanitize(localStorage.getItem("opacity")))
+    : 90
+  : 90;
 var rows = DOMPurify.isSupported
   ? DOMPurify.sanitize(localStorage.getItem("rows")) !== null &&
     DOMPurify.sanitize(localStorage.getItem("rows")) !== "" &&
@@ -42,6 +50,12 @@ var rows = DOMPurify.isSupported
     ? Number(DOMPurify.sanitize(localStorage.getItem("rows")))
     : 4
   : 4;
+if (
+  localStorage.getItem("rows") == 3 ||
+  localStorage.getItem("rows") == 4 ||
+  localStorage.getItem("rows") == 5
+)
+  amountOfRows.value = rows;
 
 backgroundChooser.addEventListener("change", (event) => {
   let file = event.target.files[0];
@@ -92,6 +106,14 @@ borderRadiusPicker.oninput = function () {
   }
 };
 
+opacityPicker.oninput = function () {
+  if (DOMPurify.isSupported) {
+    opacity = Number(DOMPurify.sanitize(opacityPicker.value));
+    root.style.setProperty("--opacity", opacity / 100);
+    localStorage.setItem("opacity", opacity);
+  }
+};
+
 amountOfRows.onchange = function () {
   if (DOMPurify.isSupported) {
     rows = Number(DOMPurify.sanitize(amountOfRows.value));
@@ -135,6 +157,9 @@ if (DOMPurify.isSupported) {
     DOMPurify.sanitize(borderRadius / 10 + "vw")
   );
 
+  opacityPicker.value = Number(DOMPurify.sanitize(opacity));
+  root.style.setProperty("--opacity", DOMPurify.sanitize(opacity / 100));
+
   if (Number(DOMPurify.sanitize(rows)) === 3) {
     document.getElementById("row4").setAttribute("show", false);
     document.getElementById("row5").setAttribute("show", false);
@@ -163,6 +188,13 @@ function resetBorderRadius() {
     "--border-radius-print",
     DOMPurify.sanitize(borderRadius / 10 + "vw")
   );
+}
+
+function resetOpacity() {
+  opacity = 90;
+  localStorage.removeItem("opacity");
+  opacityPicker.value = Number(DOMPurify.sanitize(opacity));
+  root.style.setProperty("--opacity", opacity / 100);
 }
 
 clear.onclick = function () {

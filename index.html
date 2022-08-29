@@ -32,8 +32,16 @@
             </label>
             <label class="typeLabel">
                 Eckenradius
-                <input type="range" id="borderRadiusPicker" name="borderRadiusPicker" min="0" max="33">
-                <button class="resetBorderButton material-symbols-rounded" onclick="resetBorderRadius()">
+                <input type="range" class="rangePicker" id="borderRadiusPicker" name="borderRadiusPicker" min="0"
+                    max="33">
+                <button class="resetRange material-symbols-rounded" onclick="resetBorderRadius()">
+                    restart_alt
+                </button>
+            </label>
+            <label class="typeLabel">
+                Deckkraft
+                <input type="range" class="rangePicker" id="opacityPicker" name="opacityPicker" min="0" max="100">
+                <button class="resetRange material-symbols-rounded" onclick="resetOpacity()">
                     restart_alt
                 </button>
             </label>
@@ -43,6 +51,7 @@
                 <option value="4">8 Stunden</option>
                 <option value="5">10 Stunden</option>
             </select>
+            <div style="flex-grow: 1"></div>
             <button class="typeLabel customSelect clear" id="clear" hoverEffects="true">Zurücksetzen</button>
             <button class="printButton" id="print">Drucken</button>
         </div>
