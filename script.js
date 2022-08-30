@@ -1,5 +1,11 @@
 var root = document.documentElement;
 
+var timetableContent = {
+  twoSubjects: {},
+  contentOne: {},
+  contentTwo: {},
+};
+
 var colorPicker = document.getElementById("colorPicker");
 var borderRadiusPicker = document.getElementById("borderRadiusPicker");
 var opacityPicker = document.getElementById("opacityPicker");
@@ -54,8 +60,15 @@ if (
   localStorage.getItem("rows") == 3 ||
   localStorage.getItem("rows") == 4 ||
   localStorage.getItem("rows") == 5
-)
+) {
   amountOfRows.value = rows;
+}
+var backgroundImageData = DOMPurify.isSupported
+  ? DOMPurify.sanitize(localStorage.getItem("background")) !== null &&
+    DOMPurify.sanitize(localStorage.getItem("background")) !== ""
+    ? DOMPurify.sanitize(localStorage.getItem("background"))
+    : "images/background.png"
+  : "images/background.png";
 
 backgroundChooser.addEventListener("change", (event) => {
   let file = event.target.files[0];
@@ -63,6 +76,7 @@ backgroundChooser.addEventListener("change", (event) => {
     const reader = new FileReader();
     reader.addEventListener("load", (event) => {
       backgroundImage.src = event.target.result;
+      localStorage.setItem("background", event.target.result);
     });
     reader.readAsDataURL(file);
   }
@@ -76,6 +90,69 @@ editableBoxes.forEach((element) => {
       }
     }
   };
+});
+
+if (DOMPurify.isSupported) {
+  if (localStorage.getItem("content") !== null) {
+    timetableContent = JSON.parse(
+      DOMPurify.sanitize(localStorage.getItem("content"))
+    );
+    editableBoxes.forEach((element) => {
+      let parentId = element.parentNode.id;
+      let parent = document.getElementById(parentId);
+      if (
+        timetableContent.twoSubjects[parentId] == "true" ||
+        timetableContent.twoSubjects[parentId] == "false"
+      ) {
+        parent.setAttribute(
+          "two-subjects",
+          timetableContent.twoSubjects[parentId]
+        );
+        if (timetableContent.twoSubjects[parentId] == "true") {
+          document
+            .querySelector("#" + parentId + " > input")
+            .setAttribute("checked", timetableContent.twoSubjects[parentId]);
+        }
+      }
+
+      if (
+        timetableContent.contentOne[parentId] !== null &&
+        timetableContent.contentOne[parentId] !== "" &&
+        timetableContent.contentOne[parentId] !== undefined
+      ) {
+        document.querySelector(
+          "#" + parentId + " > div:nth-child(2)"
+        ).innerHTML = timetableContent.contentOne[parentId];
+      }
+      if (
+        timetableContent.contentTwo[parentId] !== null &&
+        timetableContent.contentTwo[parentId] !== "" &&
+        timetableContent.contentOne[parentId] !== undefined
+      ) {
+        document.querySelector(
+          "#" + parentId + " > div:nth-child(3)"
+        ).innerHTML = timetableContent.contentTwo[parentId];
+      }
+    });
+  }
+}
+
+editableBoxes.forEach((element) => {
+  element.addEventListener("blur", () => {
+    let parentId = element.parentNode.id;
+    let parent = document.getElementById(parentId);
+    let elementTwoSubjects = parent.getAttribute("two-subjects");
+    let contentOne = DOMPurify.sanitize(
+      document.querySelector("#" + parentId + " > div:nth-child(2)").innerHTML
+    );
+    let contentTwo = DOMPurify.sanitize(
+      document.querySelector("#" + parentId + " > div:nth-child(3)").innerHTML
+    );
+    timetableContent.twoSubjects[parentId] = elementTwoSubjects;
+    timetableContent.contentOne[parentId] = contentOne;
+    timetableContent.contentTwo[parentId] = contentTwo;
+    localStorage.setItem("content", JSON.stringify(timetableContent));
+  });
 });
 
 colorPicker.oninput = function () {
@@ -136,6 +213,10 @@ amountOfRows.onchange = function () {
   }
 };
 
+function resetImage() {
+  backgroundImage.src = "images/background.png";
+}
+
 if (DOMPurify.isSupported) {
   colorPicker.value = DOMPurify.sanitize(color);
   root.style.setProperty("--background-color", DOMPurify.sanitize(color));
@@ -145,7 +226,7 @@ if (DOMPurify.isSupported) {
     root.style.setProperty("--accent-text-color", "#ffffff");
   }
 
-  backgroundImage.src = "images/background.png";
+  backgroundImage.src = backgroundImageData;
 
   borderRadiusPicker.value = Number(DOMPurify.sanitize(borderRadius));
   root.style.setProperty(

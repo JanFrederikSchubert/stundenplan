@@ -171,7 +171,7 @@ input[type="range"]::-moz-range-thumb {
     flex-grow: 1;
     min-width: 400px;
     position: relative;
-    height: var(--height);
+    height: calc(var(--height) - 1px);
     overflow: auto;
     display: flex;
     flex-direction: column;
@@ -192,8 +192,9 @@ input[type="range"]::-moz-range-thumb {
     align-items: center;
 }
 .timetable {
-    max-height: var(--height);
+    max-height: calc(var(--height) - 1px);
     overflow: auto;
+    overflow: overlay;
 }
 .row {
     display: flex;
