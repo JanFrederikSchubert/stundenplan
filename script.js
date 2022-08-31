@@ -9,6 +9,7 @@ var timetableContent = {
 var colorPicker = document.getElementById("colorPicker");
 var borderRadiusPicker = document.getElementById("borderRadiusPicker");
 var opacityPicker = document.getElementById("opacityPicker");
+var blurPicker = document.getElementById("blurPicker");
 var amountOfRows = document.getElementById("amountOfRows");
 var clear = document.getElementById("clear");
 var printButton = document.getElementById("print");
@@ -25,34 +26,42 @@ window.onresize = function () {
 };
 
 var color = DOMPurify.isSupported
-  ? DOMPurify.sanitize(localStorage.getItem("color")) !== null &&
-    DOMPurify.sanitize(localStorage.getItem("color")) !== "" &&
-    DOMPurify.sanitize(localStorage.getItem("color")).length === 7
+  ? localStorage.getItem("color") !== null &&
+    localStorage.getItem("color") !== "" &&
+    localStorage.getItem("color").length === 7
     ? DOMPurify.sanitize(localStorage.getItem("color"))
     : "#000000"
   : "#000000";
 var borderRadius = DOMPurify.isSupported
-  ? DOMPurify.sanitize(localStorage.getItem("border-radius")) !== null &&
-    DOMPurify.sanitize(localStorage.getItem("border-radius")) !== "" &&
-    DOMPurify.sanitize(localStorage.getItem("border-radius")) >= 0 &&
-    DOMPurify.sanitize(localStorage.getItem("border-radius")) <= 33
+  ? localStorage.getItem("border-radius") !== null &&
+    localStorage.getItem("border-radius") !== "" &&
+    localStorage.getItem("border-radius") >= 0 &&
+    localStorage.getItem("border-radius") <= 33
     ? Number(DOMPurify.sanitize(localStorage.getItem("border-radius")))
     : 10
   : 10;
 var opacity = DOMPurify.isSupported
-  ? DOMPurify.sanitize(localStorage.getItem("opacity")) !== null &&
-    DOMPurify.sanitize(localStorage.getItem("opacity")) !== "" &&
-    DOMPurify.sanitize(localStorage.getItem("opacity")) >= 0 &&
-    DOMPurify.sanitize(localStorage.getItem("opacity")) <= 100
+  ? localStorage.getItem("opacity") !== null &&
+    localStorage.getItem("opacity") !== "" &&
+    localStorage.getItem("opacity") >= 0 &&
+    localStorage.getItem("opacity") <= 100
     ? Number(DOMPurify.sanitize(localStorage.getItem("opacity")))
     : 90
   : 90;
+var blurring = DOMPurify.isSupported
+  ? localStorage.getItem("blur") !== null &&
+    localStorage.getItem("blur") !== "" &&
+    localStorage.getItem("blur") >= 0 &&
+    localStorage.getItem("blur") <= 30
+    ? Number(DOMPurify.sanitize(localStorage.getItem("blur")))
+    : 0
+  : 0;
 var rows = DOMPurify.isSupported
-  ? DOMPurify.sanitize(localStorage.getItem("rows")) !== null &&
-    DOMPurify.sanitize(localStorage.getItem("rows")) !== "" &&
-    (DOMPurify.sanitize(localStorage.getItem("rows")) == 3 ||
-      DOMPurify.sanitize(localStorage.getItem("rows")) == 4 ||
-      DOMPurify.sanitize(localStorage.getItem("rows")) == 5)
+  ? localStorage.getItem("rows") !== null &&
+    localStorage.getItem("rows") !== "" &&
+    (localStorage.getItem("rows") == 3 ||
+      localStorage.getItem("rows") == 4 ||
+      localStorage.getItem("rows") == 5)
     ? Number(DOMPurify.sanitize(localStorage.getItem("rows")))
     : 4
   : 4;
@@ -64,8 +73,8 @@ if (
   amountOfRows.value = rows;
 }
 var backgroundImageData = DOMPurify.isSupported
-  ? DOMPurify.sanitize(localStorage.getItem("background")) !== null &&
-    DOMPurify.sanitize(localStorage.getItem("background")) !== ""
+  ? localStorage.getItem("background") !== null &&
+    localStorage.getItem("background") !== ""
     ? DOMPurify.sanitize(localStorage.getItem("background"))
     : "images/background.png"
   : "images/background.png";
@@ -84,10 +93,8 @@ backgroundChooser.addEventListener("change", (event) => {
 
 editableBoxes.forEach((element) => {
   element.oninput = function () {
-    if (DOMPurify.isSupported) {
-      if (DOMPurify.sanitize(element.innerHTML) === "") {
-        element.innerHTML = "<br>";
-      }
+    if (element.innerHTML === "") {
+      element.innerHTML = "<br>";
     }
   };
 });
@@ -158,27 +165,21 @@ editableBoxes.forEach((element) => {
 colorPicker.oninput = function () {
   if (DOMPurify.isSupported) {
     color = DOMPurify.sanitize(colorPicker.value);
-    root.style.setProperty("--background-color", DOMPurify.sanitize(color));
-    if (hexToHSL(DOMPurify.sanitize(color))[2] > 65) {
+    root.style.setProperty("--background-color", color);
+    if (hexToHSL(color)[2] > 65) {
       root.style.setProperty("--accent-text-color", "#000000");
     } else {
       root.style.setProperty("--accent-text-color", "#ffffff");
     }
-    localStorage.setItem("color", DOMPurify.sanitize(color));
+    localStorage.setItem("color", color);
   }
 };
 
 borderRadiusPicker.oninput = function () {
   if (DOMPurify.isSupported) {
     borderRadius = Number(DOMPurify.sanitize(borderRadiusPicker.value));
-    root.style.setProperty(
-      "--border-radius",
-      DOMPurify.sanitize(borderRadius + "px")
-    );
-    root.style.setProperty(
-      "--border-radius-print",
-      DOMPurify.sanitize(borderRadius / 10 + "vw")
-    );
+    root.style.setProperty("--border-radius", borderRadius + "px");
+    root.style.setProperty("--border-radius-print", borderRadius / 10 + "vw");
     localStorage.setItem("border-radius", borderRadius);
   }
 };
@@ -191,22 +192,28 @@ opacityPicker.oninput = function () {
   }
 };
 
+blurPicker.oninput = function () {
+  if (DOMPurify.isSupported) {
+    blurring = Number(DOMPurify.sanitize(blurPicker.value));
+    root.style.setProperty("--blur", blurring + "px");
+    root.style.setProperty("--blur-print", blurring / 10 + "vw");
+    localStorage.setItem("blur", blurring);
+  }
+};
+
 amountOfRows.onchange = function () {
   if (DOMPurify.isSupported) {
     rows = Number(DOMPurify.sanitize(amountOfRows.value));
-    if (
-      Number(DOMPurify.sanitize(rows)) >= 3 &&
-      Number(DOMPurify.sanitize(rows)) <= 5
-    ) {
-      localStorage.setItem("rows", Number(DOMPurify.sanitize(rows)));
+    if (Number(rows) >= 3 && Number(rows) <= 5) {
+      localStorage.setItem("rows", Number(rows));
     }
-    if (Number(DOMPurify.sanitize(rows)) === 3) {
+    if (Number(rows) === 3) {
       document.getElementById("row4").setAttribute("show", false);
       document.getElementById("row5").setAttribute("show", false);
-    } else if (Number(DOMPurify.sanitize(rows)) === 4) {
+    } else if (Number(rows) === 4) {
       document.getElementById("row4").setAttribute("show", true);
       document.getElementById("row5").setAttribute("show", false);
-    } else if (Number(DOMPurify.sanitize(rows)) === 5) {
+    } else if (Number(rows) === 5) {
       document.getElementById("row4").setAttribute("show", true);
       document.getElementById("row5").setAttribute("show", true);
     }
@@ -218,9 +225,9 @@ function resetImage() {
 }
 
 if (DOMPurify.isSupported) {
-  colorPicker.value = DOMPurify.sanitize(color);
-  root.style.setProperty("--background-color", DOMPurify.sanitize(color));
-  if (hexToHSL(DOMPurify.sanitize(color))[2] > 65) {
+  colorPicker.value = color;
+  root.style.setProperty("--background-color", color);
+  if (hexToHSL(color)[2] > 65) {
     root.style.setProperty("--accent-text-color", "#000000");
   } else {
     root.style.setProperty("--accent-text-color", "#ffffff");
@@ -228,26 +235,24 @@ if (DOMPurify.isSupported) {
 
   backgroundImage.src = backgroundImageData;
 
-  borderRadiusPicker.value = Number(DOMPurify.sanitize(borderRadius));
-  root.style.setProperty(
-    "--border-radius",
-    DOMPurify.sanitize(borderRadius + "px")
-  );
-  root.style.setProperty(
-    "--border-radius-print",
-    DOMPurify.sanitize(borderRadius / 10 + "vw")
-  );
+  borderRadiusPicker.value = Number(borderRadius);
+  root.style.setProperty("--border-radius", borderRadius + "px");
+  root.style.setProperty("--border-radius-print", borderRadius / 10 + "vw");
 
-  opacityPicker.value = Number(DOMPurify.sanitize(opacity));
-  root.style.setProperty("--opacity", DOMPurify.sanitize(opacity / 100));
+  blurPicker.value = Number(blurring);
+  root.style.setProperty("--blur", blurring + "px");
+  root.style.setProperty("--blur-print", blurring / 10 + "vw");
 
-  if (Number(DOMPurify.sanitize(rows)) === 3) {
+  opacityPicker.value = Number(opacity);
+  root.style.setProperty("--opacity", opacity / 100);
+
+  if (Number(rows) === 3) {
     document.getElementById("row4").setAttribute("show", false);
     document.getElementById("row5").setAttribute("show", false);
-  } else if (Number(DOMPurify.sanitize(rows)) === 4) {
+  } else if (Number(rows) === 4) {
     document.getElementById("row4").setAttribute("show", true);
     document.getElementById("row5").setAttribute("show", false);
-  } else if (Number(DOMPurify.sanitize(rows)) === 5) {
+  } else if (Number(rows) === 5) {
     document.getElementById("row4").setAttribute("show", true);
     document.getElementById("row5").setAttribute("show", true);
   }
@@ -260,21 +265,15 @@ function setTwoSubjects(value, id) {
 function resetBorderRadius() {
   borderRadius = 10;
   localStorage.removeItem("border-radius");
-  borderRadiusPicker.value = Number(DOMPurify.sanitize(borderRadius));
-  root.style.setProperty(
-    "--border-radius",
-    DOMPurify.sanitize(borderRadius + "px")
-  );
-  root.style.setProperty(
-    "--border-radius-print",
-    DOMPurify.sanitize(borderRadius / 10 + "vw")
-  );
+  borderRadiusPicker.value = borderRadius;
+  root.style.setProperty("--border-radius", borderRadius + "px");
+  root.style.setProperty("--border-radius-print", borderRadius / 10 + "vw");
 }
 
 function resetOpacity() {
   opacity = 90;
   localStorage.removeItem("opacity");
-  opacityPicker.value = Number(DOMPurify.sanitize(opacity));
+  opacityPicker.value = opacity;
   root.style.setProperty("--opacity", opacity / 100);
 }
 

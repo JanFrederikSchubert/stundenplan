@@ -21,6 +21,12 @@
 <body>
     <div class="settingsAndTimetable">
         <div class="settings">
+            <select class="typeLabel customSelect" hoverEffects="true" id="amountOfRows">
+                <option value="">Maximale Stundenzahl</option>
+                <option value="3">6 Stunden</option>
+                <option value="4">8 Stunden</option>
+                <option value="5">10 Stunden</option>
+            </select>
             <label class="typeLabel" hoverEffects="true">
                 <input type="file" id="background" name="background" accept="image/png, image/jpeg">
                 Hintergrundbild wählen
@@ -45,12 +51,11 @@
                     restart_alt
                 </button>
             </label>
-            <select class="typeLabel customSelect" hoverEffects="true" id="amountOfRows">
-                <option value="">Maximale Stundenzahl</option>
-                <option value="3">6 Stunden</option>
-                <option value="4">8 Stunden</option>
-                <option value="5">10 Stunden</option>
-            </select>
+            <label class="typeLabel">
+                Unschärfe
+                <input style="margin-right: 0;" type="range" class="rangePicker" id="blurPicker" name="blurPicker"
+                    min="0" max="30">
+            </label>
             <div style="flex-grow: 1"></div>
             <button class="typeLabel customSelect clear" id="clear" hoverEffects="true">Zurücksetzen</button>
             <button class="printButton" id="print">Drucken</button>

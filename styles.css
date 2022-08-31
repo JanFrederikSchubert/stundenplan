@@ -2,6 +2,8 @@
     --gap: 10px;
     --border-radius: 10px;
     --border-radius-print: 1vw;
+    --blur: 0px;
+    --blur-print: 0vw;
     --background-color: #000000;
     --accent-text-color: #ffffff;
     --height: 100vw;
@@ -21,7 +23,6 @@ body {
 body::-webkit-scrollbar,
 div::-webkit-scrollbar {
     background: #121212;
-    border-radius: 10px 0 0 0;
     max-width: 20px;
     max-height: 20px;
 }
@@ -84,6 +85,7 @@ input[type="color"] {
     background-color: var(--background-color);
 }
 
+
 .typeLabel {
     color: #fff;
     display: flex;
@@ -121,10 +123,6 @@ input[type="color"] {
     font-size: 18px;
 }
 
-.clear {
-    border-width: 0 !important;
-}
-
 .printButton {
     color: #fff;
     display: flex;
@@ -139,6 +137,23 @@ input[type="color"] {
     border-width: 0;
     width: calc(100% - 20px);
     font-size: 18px;
+}
+
+.clear {
+    border-width: 0 !important;
+    background-color: #622c2c !important;
+}
+
+.clear:hover {
+    background-color: #5e1a1a !important;
+}
+
+.clear:focus {
+    background-color: #5e1a1a !important;
+}
+
+.clear:active {
+    background-color: #550000 !important;
 }
 
 .printButton:hover {
@@ -285,6 +300,7 @@ input[type="range"]::-moz-range-thumb {
 
 .box[background-white="true"] {
     background-color: hsla(0, 100%, 100%, var(--opacity));
+    backdrop-filter: blur(var(--blur));
     outline: 1px solid black;
 }
 
@@ -412,6 +428,7 @@ input[type="range"]::-moz-range-thumb {
 
     .box[background-white="true"] {
         outline: 0.1vw solid black;
+        backdrop-filter: blur(var(--blur-print));
     }
 
     .box[column="1"] {
