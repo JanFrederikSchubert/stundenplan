@@ -85,7 +85,18 @@ backgroundChooser.addEventListener("change", (event) => {
     const reader = new FileReader();
     reader.addEventListener("load", (event) => {
       backgroundImage.src = event.target.result;
-      localStorage.setItem("background", event.target.result);
+      try {
+        localStorage.setItem("background", event.target.result);
+        document.getElementById("imageError").style =
+          "display: none; margin-inline: 20px; margin-block: 5px; color: rgb(255, 116, 116);";
+      } catch (error) {
+        localStorage.removeItem("background");
+        let containerWidth = document.querySelector(".settings").clientWidth;
+        document.getElementById("imageError").style =
+          "max-width:" +
+          (containerWidth - 40) +
+          "px; margin-inline: 20px; margin-block: 5px; color: rgb(255, 116, 116);";
+      }
     });
     reader.readAsDataURL(file);
   }
