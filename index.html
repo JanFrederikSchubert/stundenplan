@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ein Programm zum Erstellen und Designen Ihres eigenen Stundenplanes.">
     <title>Stundenplan-Ersteller</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.svg">
     <link rel="stylesheet" href="styles.css">
@@ -21,7 +22,7 @@
 <body>
     <div class="settingsAndTimetable">
         <div class="settings">
-            <select class="typeLabel customSelect" hoverEffects="true" id="amountOfRows">
+            <select class="typeLabel customSelect" hoverEffects="true" id="amountOfRows" title="Maximale Stundenzahl">
                 <option value="">Maximale Stundenzahl</option>
                 <option value="3">6 Stunden</option>
                 <option value="4">8 Stunden</option>
@@ -40,14 +41,14 @@
                 Eckenradius
                 <input type="range" class="rangePicker" id="borderRadiusPicker" name="borderRadiusPicker" min="0"
                     max="33">
-                <button class="resetRange material-symbols-rounded" onclick="resetBorderRadius()">
+                <button type="button" class="resetRange material-symbols-rounded" onclick="resetBorderRadius()">
                     restart_alt
                 </button>
             </label>
             <label class="typeLabel">
                 Deckkraft
                 <input type="range" class="rangePicker" id="opacityPicker" name="opacityPicker" min="0" max="100">
-                <button class="resetRange material-symbols-rounded" onclick="resetOpacity()">
+                <button type="button" class="resetRange material-symbols-rounded" onclick="resetOpacity()">
                     restart_alt
                 </button>
             </label>
@@ -57,11 +58,13 @@
                     min="0" max="30">
             </label>
             <div style="flex-grow: 1"></div>
-            <button class="typeLabel customSelect clear" id="clear" hoverEffects="true">Zurücksetzen</button>
-            <button class="printButton" id="print">Drucken</button>
+            <button type="button" class="typeLabel customSelect clear" id="clear"
+                hoverEffects="true">Zurücksetzen</button>
+            <button type="button" class="printButton" id="print">Drucken</button>
         </div>
         <div class="timetable">
-            <img class="background" id="backgroundImage" src="images/background.png" onerror="resetImage()" />
+            <img class="background" id="backgroundImage" src="images/background.png" onerror="resetImage()"
+                alt="Hintergrundbild" />
             <div class="wrapper">
                 <div>
                     <div class="row">
@@ -75,27 +78,32 @@
                     <div class="row">
                         <div class="box" accent="true" background-white="false" column="1" row="2">1<br>2</div>
                         <div id="mo1" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mo1')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'mo1')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="di1" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'di1')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'di1')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="mi1" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mi1')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'mi1')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="do1" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'do1')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'do1')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="fr1" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'fr1')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'fr1')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
@@ -103,27 +111,32 @@
                     <div class="row">
                         <div class="box" accent="true" background-white="false" column="1" row="2">3<br>4</div>
                         <div id="mo2" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mo2')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'mo2')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="di2" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'di2')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'di2')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="mi2" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mi2')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'mi2')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="do2" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'do2')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'do2')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="fr2" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'fr2')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'fr2')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
@@ -131,27 +144,32 @@
                     <div class="row">
                         <div class="box" accent="true" background-white="false" column="1" row="2">5<br>6</div>
                         <div id="mo3" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mo3')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'mo3')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="di3" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'di3')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'di3')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="mi3" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mi3')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'mi3')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="do3" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'do3')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'do3')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="fr3" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'fr3')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'fr3')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
@@ -159,27 +177,32 @@
                     <div class="row" id="row4">
                         <div class="box" accent="true" background-white="false" column="1" row="2">7<br>8</div>
                         <div id="mo4" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mo4')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'mo4')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="di4" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'di4')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'di4')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="mi4" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mi4')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'mi4')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="do4" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'do4')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'do4')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="fr4" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'fr4')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'fr4')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
@@ -187,27 +210,32 @@
                     <div class="row" id="row5">
                         <div class="box" accent="true" background-white="false" column="1" row="2">9<br>10</div>
                         <div id="mo5" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mo5')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'mo5')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="di5" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'di5')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'di5')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="mi5" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'mi5')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'mi5')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="do5" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'do5')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'do5')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>
                         <div id="fr5" class="box" background-white="true" column="2" row="2" two-subjects="false">
-                            <input type="checkbox" onchange="setTwoSubjects(this.checked, 'fr5')">
+                            <input type="checkbox" title="Erster und zweiter Termin"
+                                onchange="setTwoSubjects(this.checked, 'fr5')">
                             <div contenteditable="true"><br></div>
                             <div contenteditable="true"><br></div>
                         </div>

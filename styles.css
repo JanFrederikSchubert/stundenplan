@@ -295,6 +295,7 @@ input[type="checkbox"] {
     border-radius: 5px;
     display: grid;
     place-content: center;
+    cursor: pointer;
 }
 
 input[type="checkbox"]::before {
@@ -302,13 +303,14 @@ input[type="checkbox"]::before {
     width: 1px;
     height: 8px;
     border-radius: 100vw;
-    opacity: 1;
-    transition: opacity 0.2s ease;
+    transform: scaleY(1);
+    transition: transform 0.4s cubic-bezier(0.5, 0.25, 0.5, 1.5);
     background-color: black;
 }
 
 input[type="checkbox"]:checked::before {
-    opacity: 0;
+    transform: scaleY(0);
+    transition: transform 0.4s cubic-bezier(0.5, -0.5, 0.5, 0.75);
 }
 
 .box {
@@ -328,6 +330,7 @@ input[type="checkbox"]:checked::before {
 
 .box[background-white="true"] {
     background-color: hsla(0, 100%, 100%, var(--opacity));
+    -webkit-backdrop-filter: blur(var(--blur));
     backdrop-filter: blur(var(--blur));
     outline: 1px solid black;
 }
@@ -456,6 +459,7 @@ input[type="checkbox"]:checked::before {
 
     .box[background-white="true"] {
         outline: 0.1vw solid black;
+        -webkit-backdrop-filter: blur(var(--blur-print));
         backdrop-filter: blur(var(--blur-print));
     }
 
