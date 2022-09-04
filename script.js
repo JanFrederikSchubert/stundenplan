@@ -19,10 +19,20 @@ var backgroundImage = document.getElementById("backgroundImage");
 
 var editableBoxes = document.querySelectorAll("[contenteditable='true']");
 
-root.style.setProperty("--height", window.innerHeight);
+root.style.setProperty(
+  "--height",
+  (window.innerHeight > window.document.documentElement.clientHeight
+    ? window.document.documentElement.clientHeight
+    : window.innerHeight) + "px"
+);
 
 window.onresize = function () {
-  root.style.setProperty("--height", window.innerHeight + "px");
+  root.style.setProperty(
+    "--height",
+    (window.innerHeight > window.document.documentElement.clientHeight
+      ? window.document.documentElement.clientHeight
+      : window.innerHeight) + "px"
+  );
 };
 
 var color = DOMPurify.isSupported

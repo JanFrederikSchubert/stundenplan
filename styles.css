@@ -17,6 +17,7 @@ body {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     overflow: hidden;
+    overflow-x: auto;
     background-color: #121212;
 }
 
@@ -265,8 +266,16 @@ input[type="range"]::-moz-range-thumb {
 
 .timetable {
     max-height: calc(var(--height) - 1px);
+    min-width: 400px;
     overflow: auto;
     overflow: overlay;
+    position: relative;
+}
+
+@media screen and (min-height: 708px) {
+    .timetable {
+        max-height: 708px;
+    }
 }
 
 .row {
