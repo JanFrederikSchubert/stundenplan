@@ -52,14 +52,6 @@ div::-webkit-scrollbar-thumb:active {
     border-radius: 100vw;
 }
 
-.material-symbols-rounded {
-    font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 48
-}
-
 input[type="file"] {
     opacity: 0;
     width: 0;
@@ -215,21 +207,27 @@ input[type="range"]::-moz-range-thumb {
     outline: none;
     border: none;
     background: none;
-    color: white;
     padding: 0;
     cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
+
+
+.resetRange>svg {
+    color: white;
     transition: color 0.2s ease;
 }
 
-.resetRange:hover {
+.resetRange:hover>svg {
     color: #c2c2c2;
 }
 
-.resetRange:focus {
+.resetRange:focus>svg {
     color: #c2c2c2;
 }
 
-.resetRange:active {
+.resetRange:active>svg {
     color: #9f9f9f;
 }
 
